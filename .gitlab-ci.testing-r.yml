@@ -1,0 +1,23 @@
+stages:
+  - setup
+  - test
+
+set-version:
+  stage: setup
+  script:
+    - echo "value-from-testing-r" > VAR_1.env
+  artifacts:
+    untracked: true
+    expire_in: 30 minutes
+
+.test-r-script:
+  stage: test
+  image: r-base:latest
+  script:
+    - R -e "install.packages(c('testthat'))"
+    - Rscript run_tests.r > test_results.txt
+    - cat test_results.txt
+    - grep -Foi "failed" test_results.txt && exit 1 || exit 0
+  allow_failure: true
+  tags:
+    - r-script
