@@ -1,0 +1,12 @@
+hello-world-job:
+   stage: test
+   variables:
+      JOB_VARIABLE: "from external file"
+   script:
+      - echo "Hello World from an external job: ${JOB_VARIABLE}"
+
+.hello-world-template:
+   variables:
+      TEMPLATE_VARIABLE: "from template"
+   script:
+      - echo "Hello World from a template: ${TEMPLATE_VARIABLE}"
